@@ -11,7 +11,24 @@ const create = async (displayName, email, password, image) => {
   return newUser;
 };
 
+const getAllUsers = async () => {
+  const result = await User.findAll();
+
+  const filteredUsers = result.map((person) => {
+    const newPerson = {
+      id: person.id,
+      displayName: person.displayName,
+      email: person.email,
+      image: person.image,
+    };
+
+    return newPerson;
+  });
+  return filteredUsers;
+};
+
 module.exports = {
   getByEmail,
   create,
+  getAllUsers,
 };

@@ -14,7 +14,7 @@ const nameMessage = '"displayName" length must be at least 8 characters long';
 const emailMessage = '"email" must be a valid email';
 const passwordMessage = '"password" length must be at least 6 characters long';
 
-module.exports = async (req, res) => {
+const addUser = async (req, res) => {
   const { displayName, email, password } = req.body;
 
   if (!isNameValid(displayName)) { return res.status(400).json({ message: nameMessage }); }
@@ -41,4 +41,15 @@ module.exports = async (req, res) => {
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
   
   res.status(201).json({ token });
+};
+
+const getAllUsers = async (req, res) => {
+  const result = await userService.getAllUsers();
+
+  res.status(200).json(result);
+};
+
+module.exports = {
+  addUser,
+  getAllUsers,
 };
